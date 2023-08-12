@@ -42,11 +42,14 @@ for a "dotfiles"? Moshell.sh is a framework to persist its customizations withou
 Download and install:
 
 ```bash
-  $ git clone https://github.com/andersonbosa/moshell.sh ~/.moshell.sh
+  # Download
+  git clone https://github.com/andersonbosa/moshell.sh ~/.moshell.sh
     
-  cd ~/.moshell.sh
+  # Install by adding the following line to your shell rc (e.g., .bashrc, .zshrc, etc):
+  source ~/.moshell.sh/moshell.sh/moshell.sh
 
-  exec tools/install.sh &!
+  # Validate install
+  moshell version
 ```
 
 #### Commands:
