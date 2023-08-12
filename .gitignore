@@ -1,0 +1,8 @@
+# temp files directories
+logs/
+*.swp
+.DS_Store
+
+# editor configs
+.vscode
+.idea
