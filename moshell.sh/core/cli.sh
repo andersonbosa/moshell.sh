@@ -37,8 +37,12 @@ EOF
 }
 
 function _moshell::edit {
-  local msg="Openning in your prefered editor: $EDITOR... "
-  _moshell::log info $msg
+  if [[ -z "$EDITOR" ]]; then
+    _moshell::log info "Using default EDITOR"
+    EDITOR=$(which vi)
+  fi
+
+  _moshell::log info "Openning in your prefered editor: $EDITOR... "
   sleep 1
   $EDITOR $_MOSHEL_DIR_BASE
   return 0
@@ -70,7 +74,7 @@ function _moshell::version {
     local local_version=$(cat $_MOSHEL_DIR_BASE/version)
 
     # Show version and commit hash
-    printf "[%s] %s (%s)\n" "$local_version" "$remote_version" "$commit" 
+    printf "[%s] %s (%s)\n" "$local_version" "$remote_version" "$commit"
   )
 }
 

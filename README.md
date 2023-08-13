@@ -32,8 +32,8 @@
 
 ### Summary
 
-Make your customizations and take it everywhere. What is the difference 
-for a "dotfiles"? Moshell.sh is a framework to persist its customizations without much work.
+Make your customizations and take them everywhere. What is the difference between "dotfiles"? 
+Moshell.sh is a framework to persist its customizations without complexity.
 
 ---
 
