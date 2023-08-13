@@ -1,4 +1,4 @@
-function poc_init_python() {
+function create_poc_python() {
   create_venv
 
   pysource
@@ -10,4 +10,18 @@ function poc_init_python() {
   git init
   git add .
   git commit -m 'init python project'
+}
+
+function create_makefile_python() {
+  cat <<EOF >./Makefile
+  
+setup-env:
+  python3 -m venv .venv
+  source .venv/bin/activate
+  pip install -r requeriments.txt
+
+run:
+  python main.py
+
+EOF
 }

@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*-
 
 export _MOSHEL_DIR_BASE="$(dirname "$(realpath "$0")")"
-export _MOSHEL_DIR_LIB="$_MOSHEL_DIR_BASE/lib"
+export _MOSHEL_DIR_CORE="$_MOSHEL_DIR_BASE/core"
+export _MOSHEL_DIR_PLUGINS="$_MOSHEL_DIR_BASE/plugins"
 export _MOSHEL_DIR_CUSTOM="$_MOSHEL_DIR_BASE/custom"
-export _MOSHEL_DIR_LOGS_FILE="$_MOSHEL_DIR_BASE/logs/$(date +%s).log"
 
 # =============================================================================
 
@@ -22,17 +22,20 @@ export _MOSHEL_DIR_LOGS_FILE="$_MOSHEL_DIR_BASE/logs/$(date +%s).log"
 #       source $script_file 2>&1 | tee -a "$_MOSHEL_DIR_LOGS_FILE"
 
 #       # Verbose if flag is diff 0
-#       [[ "$_MOSHELL_DEBUG" == "1" ]] && echo "[DEBUG] loaded: $script_file"
+#       [[ "$_MOSHELL_LOGGING" == "1" ]] && echo "[DEBUG] loaded: $script_file"
 #     fi
 #   done
 # }
 #
-# moshell::import_libs $_MOSHEL_DIR_LIB 2>&1 | tee -a "$_MOSHEL_DIR_LOGS_FILE"
+# moshell::import_libs $_MOSHEL_DIR_CORE 2>&1 | tee -a "$_MOSHEL_DIR_LOGS_FILE"
 # moshell::import_libs $_MOSHEL_DIR_CUSTOM 2>&1 | tee -a "$_MOSHEL_DIR_LOGS_FILE"
 #
 
 # =============================================================================
 
 # To infinity and beyond!
-source $_MOSHEL_DIR_LIB/index.sh
+source $_MOSHEL_DIR_CORE/index.sh
+source $_MOSHEL_DIR_PLUGINS/index.sh
 source $_MOSHEL_DIR_CUSTOM/index.sh
+
+_moshell::log success "Moshell.sh initialized with success!"

@@ -3,30 +3,6 @@
 
 ## Utility functions
 
-# usage:
-# _moshell::log error "lorem ipsum"
-function _moshell::log {
-  # if promptsubst is set, a message with `` or $()
-  # will be run even if quoted due to `print -P`
-  setopt localoptions nopromptsubst
-
-  # $1 = info|warn|error|debug
-  # $2 = text
-  # $3 = (optional) name of the logger
-
-  local logtype="$1"
-  local logname="" # TODO: inpired in OhMyZSH
-
-  # Choose coloring based on log type
-  case "$logtype" in
-  prompt) print -Pn "%S%F{blue}$logname%f%s: $2" ;;
-  debug) print -P "%F{white}$logname%f: $2" ;;
-  info) print -P "%F{green}$logname%f: $2" ;;
-  warn) print -P "%S%F{yellow}$logname%f%s: $2" ;;
-  error) print -P "%S%F{red}$logname%f%s: $2" ;;
-  esac >&2
-}
-
 function _moshell::confirm {
   # If question supplied, ask it before reading the answer
   # NOTE: uses the logname of the caller function
@@ -54,16 +30,24 @@ Available commands:
   help                Print this help message
   edit                Edit moshell configurations
   reload              Reload the configuration
-  update              Update Moshell.sh
+  update              TODO: Update Moshell.sh
   version             Show the version
 
 EOF
 }
 
+function _moshell::edit {
+  local msg="Openning in your prefered editor: $EDITOR... "
+  _moshell::log info $msg
+  sleep 1
+  $EDITOR $_MOSHEL_DIR_BASE
+  return 0
+}
+
 function _moshell::reload {
-  # TODO: source moshell index
-  echo "[INFO] Recharged Settings"
+  _moshell::log info $msg
   source "$_MOSHEL_DIR_BASE/moshell.sh"
+  return 0
 }
 
 function _moshell::version {
@@ -74,17 +58,19 @@ function _moshell::version {
     # 1) try tag-like version
     # 2) try branch name
     # 3) try name-rev (tag~<rev> or branch~<rev>)
-    local version
-    version=$(command git describe --tags HEAD 2>/dev/null) ||
-      version=$(command git symbolic-ref --quiet --short HEAD 2>/dev/null) ||
-      version=$(command git name-rev --no-undefined --name-only --exclude="remotes/*" HEAD 2>/dev/null) ||
-      version="<detached>"
+    local remote_version
+    remote_version=$(command git describe --tags HEAD 2>/dev/null) ||
+      remote_version=$(command git symbolic-ref --quiet --short HEAD 2>/dev/null) ||
+      remote_version=$(command git name-rev --no-undefined --name-only --exclude="remotes/*" HEAD 2>/dev/null) ||
+      remote_version="<detached>"
 
     # Get short hash for the current HEAD
     local commit=$(command git rev-parse --short HEAD 2>/dev/null)
 
+    local local_version=$(cat $_MOSHEL_DIR_BASE/version)
+
     # Show version and commit hash
-    printf "%s (%s)\n" "$version" "$commit"
+    printf "[%s] %s (%s)\n" "$local_version" "$remote_version" "$commit" 
   )
 }
 
