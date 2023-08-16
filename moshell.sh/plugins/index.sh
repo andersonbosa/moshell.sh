@@ -2,8 +2,7 @@ moshell::plugins::index() {
   echo '# This is a index file to import Moshell.sh plugins.'
 }
 
-PLUGINS_BASE_PATH="$(dirname "$(realpath "$0")")"
-PLUGINS_FOUND=$(ls $PLUGINS_BASE_PATH/*/index.sh $PLUGINS_BASE_PATH/*/_index.sh)
+PLUGINS_FOUND=$(ls $_MOSHEL_DIR_PLUGINS/*/index.sh $_MOSHEL_DIR_PLUGINS/*/_index.sh 2>/dev/null)
 PLUGINS_PATH=($(echo $PLUGINS_FOUND | sort -n | uniq))
 
 # Loop through and source each file in the "plugins" directory

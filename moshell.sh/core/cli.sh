@@ -36,7 +36,7 @@ Available commands:
 EOF
 }
 
-function _moshell::edit {
+function _moshell::edit() {
   if [[ -z "$EDITOR" ]]; then
     _moshell::log info "Using default EDITOR"
     EDITOR=$(which vi)
@@ -44,19 +44,19 @@ function _moshell::edit {
 
   _moshell::log info "Openning in your prefered editor: $EDITOR... "
   sleep 1
-  $EDITOR $_MOSHEL_DIR_BASE
+  $EDITOR $_MOSHEL_DIR_BASE_PATH
   return 0
 }
 
-function _moshell::reload {
+function _moshell::reload() {
   _moshell::log info $msg
-  source "$_MOSHEL_DIR_BASE/moshell.sh"
+  source "$_MOSHEL_DIR_BASE_PATH/moshell.sh"
   return 0
 }
 
-function _moshell::version {
+function _moshell::version() {
   (
-    builtin cd -q "$_MOSHEL_DIR_BASE"
+    builtin cd -q "$_MOSHEL_DIR_BASE_PATH"
 
     # Get the version name:
     # 1) try tag-like version
@@ -71,7 +71,7 @@ function _moshell::version {
     # Get short hash for the current HEAD
     local commit=$(command git rev-parse --short HEAD 2>/dev/null)
 
-    local local_version=$(cat $_MOSHEL_DIR_BASE/version)
+    local local_version=$(cat $_MOSHEL_DIR_BASE_PATH/version)
 
     # Show version and commit hash
     printf "[%s] %s (%s)\n" "$local_version" "$remote_version" "$commit"

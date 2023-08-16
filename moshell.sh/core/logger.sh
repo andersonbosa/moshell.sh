@@ -38,8 +38,8 @@ function _moshell::log {
   if [[ "$_MOSHELL_LOGGING" == 1 ]]; then
     # Save to log file
     local logfile="$(date +%F)_moshell.sh.log"
-    local logpath="$_MOSHEL_DIR_BASE/logs/$logfile"
-    echo "[$(date --iso-8601=ns)] [$logtype] $message" >>"$logpath"
+    local logpath="$_MOSHEL_DIR_BASE_PATH/logs/$logfile"
+
   fi
 }
 
