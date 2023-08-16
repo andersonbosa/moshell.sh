@@ -1,5 +1,5 @@
 # temp files directories
-logs/
+*/logs/*.log
 *.swp
 .DS_Store
 
