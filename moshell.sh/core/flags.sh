@@ -18,6 +18,7 @@ export _MOSHELL_VERBOSE=1
 
 # Enable plugins
 export _MOSHELL_LOAD_PLUGINS=1
+export _MOSHELL_LOAD_CUSTOMS=1
 
 ###############################################################################
 # Keep this import at the end of "flags.sh"
