@@ -1,11 +1,8 @@
-#!/usr/bin/env bash
-# -*- coding: utf-8 -*-
+## Utility function()s
 
-## Utility functions
-
-function _moshell::confirm {
+function _moshell::confirm() {
   # If question supplied, ask it before reading the answer
-  # NOTE: uses the logname of the caller function
+  # NOTE: uses the logname of the caller functio()n
   if [[ -n "$1" ]]; then
     _moshell::log prompt "$1" "$2"
   fi
@@ -21,7 +18,7 @@ function _moshell::confirm {
 
 ## User-facing commands
 
-function _moshell::help {
+function _moshell::help() {
   cat >&2 <<EOF
 Usage: moshell <command> [options]
 
@@ -30,7 +27,8 @@ Available commands:
   help                Print this help message
   edit                Edit moshell configurations
   reload              Reload the configuration
-  update              TODO: Update Moshell.sh
+  flags               Update Moshell.sh environment variables
+  update              [TODO] Update Moshell.sh
   version             Show the version
 
 EOF
@@ -78,12 +76,19 @@ function _moshell::version() {
   )
 }
 
-function _moshell {
+function _moshell::flags() {
+  echo "FLAGS: "
+  # TODO: 
+  return 0
+}
+
+function _moshell() {
   local -a cmds subcmds
   cmds=(
     'help:Print this help message'
     'edit:Edit moshell configurations'
     'reload:Reload the configuration'
+    'flags:Update Moshell.sh environment variables'
     'update:Update Moshell.sh'
     'version:Show the version'
   )
@@ -93,20 +98,20 @@ function _moshell {
   return 0
 }
 
-function moshell {
+function moshell() {
   [[ $# -gt 0 ]] || {
     _moshell::help
-    return 1
+    return 0
   }
 
   local command="$1"
   shift
 
-  # Subcommand functions start with _ so that they don't
+  # Subcommand functions start with _ so that they don'()t
   # appear as completion entries when looking for `moshell`
   if ! declare -f "_moshell::$command" &>/dev/null; then
     _moshell::help
-    return 1
+    return 0
   fi
 
   _moshell::$command "$@"
