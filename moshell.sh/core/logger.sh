@@ -4,9 +4,9 @@ function _moshell::log {
   local logtype="$1"
   local message="$2"
 
-  local log_colors
   local word_colors="\e[30m" # Black text color
   local log_reset="\e[0m"
+  local log_colors
 
   # Transform to uppercase
   logtype=$(echo "$logtype" | tr '[:lower:]' '[:upper:]')
@@ -32,14 +32,23 @@ function _moshell::log {
 
   if [[ "$_MOSHELL_LOGGING" == 1 ]]; then
     # Save to log file
-    local logfile="$(date +%F)_moshell.sh.log"
+    local logfile="$(date +%F)_$($$)_.log"
     local logpath="$_MOSHEL_DIR_BASE_PATH/logs/$logfile"
 
-    if [[ ! -f $logpath ]] || [ ! -s $logpath ]; then
+    if [[ ! -f $logpath ]] || [ ! -s $logpath ]; then # If file does not exist or is empty
       echo '[DATE]                                [PID]   [TYPE] [MESSAGE]' >>$logpath
     fi
 
     echo "[$(date --iso-8601=ns)] [$$] [$logtype] $message" >>"$logpath"
+  fi
+}
+
+function _moshell::print() {
+  if [[ $_MOSHELL_VERBOSE == 0 ]]; then
+    _MOSHELL_VERBOSE=1
+    _moshell::log "$@"
+  else
+    _moshell::log "$@"
   fi
 }
 

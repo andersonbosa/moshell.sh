@@ -76,9 +76,28 @@ function _moshell::version() {
   )
 }
 
+function _moshell::flags::update() {
+  local flag_name="$1"
+  local new_value="$2"
+
+  if [[ -z "$flag_name" || -z "$new_value" ]]; then
+    _moshell::print error "Usage: _moshell::flags::update <flag_name> <new_value>"
+    return 1
+  fi
+
+  sed -i "s/^export $flag_name=.*/export $flag_name=$new_value/" "$_MOSHEL_DIR_CORE_FLAGS"
+}
+
 function _moshell::flags() {
-  echo "FLAGS: "
-  # TODO: 
+  local flag_name="$1"
+  local new_value="$2"
+
+  if [[ ! -z $flag_name ]] && [[ ! -z $new_value ]]; then
+    _moshell::flags::update $flag_name $new_value
+    return 0
+  fi
+
+  _moshell::flags::list
   return 0
 }
 
