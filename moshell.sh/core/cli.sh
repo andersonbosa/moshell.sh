@@ -54,7 +54,7 @@ function _moshell::reload() {
 
 function _moshell::version() {
   (
-    builtin cd -q "$_MOSHEL_DIR_BASE_PATH"
+    cd "$_MOSHEL_DIR_BASE_PATH"
 
     # Get the version name:
     # 1) try tag-like version
