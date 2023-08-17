@@ -11,20 +11,16 @@ function _moshell::scripts::build() {
 }
 
 # Run docker image shareing Moshell.SH tools to speed up installation test
+# Useful too for testing different shells
 function _moshell::scripts::run() {
-  local HOST_PATH=$MOSHELL_LOCAL_PATH/moshell.sh/tools
-  local CONTAINER_PATH=/home/moshell/tools
+  local HOST_PATH=$MOSHELL_LOCAL_PATH/moshell.sh
+  local CONTAINER_PATH=/home/moshell/from_host/moshell.sh
 
   docker run --rm \
     -it \
     -v $HOST_PATH:$CONTAINER_PATH \
     --entrypoint $1 \
     $MOSHELL_IMAGE
-}
-
-# Useful for testing different shells
-function _moshell::scripts::test() {
-  docker run --rm -it --entrypoint $1 $MOSHELL_IMAGE
 }
 
 function _moshell::scripts::usage() {
@@ -66,6 +62,7 @@ while (($# > 0)); do
     ;;
   *)
     echo "Invalid option."
+    exit
     ;;
   esac
 done
