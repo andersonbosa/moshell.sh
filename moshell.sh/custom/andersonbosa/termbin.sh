@@ -1,7 +1,7 @@
-
 # Function to upload content to termbin.com
 function _termbin::upload() {
   local content="$1"
+
   local response=$(echo -n "$content" | nc termbin.com 9999)
 
   if [[ "$response" =~ ^https://termbin.com/[a-zA-Z0-9]+$ ]]; then
@@ -30,17 +30,21 @@ function termbin() {
   "upload")
     if [[ -z "$2" ]]; then
       echo "Usage: termbin.sh upload [content]"
-      return 1
+      return 0
     fi
+
     _termbin::upload "$2"
     ;;
+
   "download")
     if [[ -z "$2" ]]; then
       echo "Usage: termbin.sh download [code]"
-      return 1
+      return 0
     fi
+
     _termbin::download "$2"
     ;;
+
   *)
     echo "Invalid command: $1"
     return 1

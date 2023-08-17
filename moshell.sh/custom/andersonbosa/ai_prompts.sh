@@ -67,3 +67,25 @@ function ai_create_activities_routine() {
 Develop a routine of practical tasks for my $USER_INPUT studies, so as to focus on my weaknesses and with constant feedback for my evolution
 EOF
 }
+
+function ai_git_commit() {
+  cat <<EOF | cat
+
+You are to act as the author of a commit message in git. Your mission is to create clean and comprehensive commit messages in the conventional commit convention (based on https://www.conventionalcommits.org/en/v1.0.0/) and explain WHAT were the changes and WHY the changes were done. I'll send you an output of 'git diff --staged' command, and you convert it into a commit message.
+
+For you to generate the correct output, also follow these rules:
+  * Do not preface the commit with anything.
+  * Add a short description of WHY the changes are done after the commit message. Don't start it with "This commit", just describe the changes.
+  * Use the present tense.
+  * Use the Conventional Commits specification (https://www.conventionalcommits.org/en/v1.0.0/)
+  * Lines must not be longer than 100 characters.
+  * The total output must have at the maximum 200 characters"
+  # * Create a list of bullet items with the main changes
+  * Output in a block of markdown code
+
+\`\`\`diff
+$(git diff --staged)
+\`\`\`
+
+EOF
+}

@@ -32,7 +32,8 @@ function _moshell::log {
 
   if [[ "$_MOSHELL_LOGGING" == 1 ]]; then
     # Save to log file
-    local logfile="$(date +%F)_$($$)_.log"
+    local PID=$$
+    local logfile="$(date +%F)_$PID_.log"
     local logpath="$_MOSHEL_DIR_BASE_PATH/logs/$logfile"
 
     if [[ ! -f $logpath ]] || [ ! -s $logpath ]; then # If file does not exist or is empty

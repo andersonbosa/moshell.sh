@@ -1,0 +1,2 @@
+
+alias copy="clipcopy"

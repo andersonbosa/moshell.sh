@@ -19,8 +19,8 @@ source $_MOSHEL_DIR_CORE/index.sh
 source $_MOSHEL_DIR_CUSTOM/index.sh
 source $_MOSHEL_DIR_PLUGINS/index.sh
 
-[[ "$_MOSHELL_VERBOSE" == 1 ]] && _moshell::banner::print
 _moshell::log success "Moshell.sh version '$(mo version)' initialized!"
+[[ "$_MOSHELL_VERBOSE" == 1 ]] && _moshell::banner::print
 
 ###############################################################################
 # TODO: I tried to perform import in a dynamic way but it was not possible ...

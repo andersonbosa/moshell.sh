@@ -28,6 +28,7 @@ Available commands:
   edit                Edit moshell configurations
   reload              Reload the configuration
   flags               Update Moshell.sh environment variables
+  plugins             [TODO] Plugins management
   update              [TODO] Update Moshell.sh
   version             Show the version
 
@@ -76,6 +77,17 @@ function _moshell::version() {
   )
 }
 
+# Updates a flag in the flags configuration file and its override file.
+# If the flag doesn't exist in the override file, adds it.
+#
+# Usage: _moshell::flags::update <flag_name> <new_value>
+#
+# Parameters:
+#   - flag_name: The name of the flag to update.
+#   - new_value: The new value to set for the flag.
+#
+# Example:
+#   _moshell::flags::update _MOSHELL_LOGGING 1
 function _moshell::flags::update() {
   local flag_name="$1"
   local new_value="$2"
@@ -85,7 +97,27 @@ function _moshell::flags::update() {
     return 1
   fi
 
-  sed -i "s/^export $flag_name=.*/export $flag_name=$new_value/" "$_MOSHEL_DIR_CORE_FLAGS"
+  _MOSHEL_DIR_CORE_FLAGS_OVERRIDE="${_MOSHEL_DIR_CORE_FLAGS}.override"
+  touch "$_MOSHEL_DIR_CORE_FLAGS_OVERRIDE"
+
+  # Check if the flag exists in the override file
+  if grep -qF "export $flag_name=" "$_MOSHEL_DIR_CORE_FLAGS_OVERRIDE"; then
+    # Update the existing entry in the override file
+    sed -i "s/^export $flag_name=.*/export $flag_name=$new_value/" "$_MOSHEL_DIR_CORE_FLAGS_OVERRIDE"
+  else
+    # Add a new entry to the override file
+    echo "export $flag_name=$new_value" >>"$_MOSHEL_DIR_CORE_FLAGS_OVERRIDE"
+  fi
+
+  # [optional] Uncomment to update the original flags file
+  # sed -i "s/^export $flag_name=.*/export $flag_name=$new_value/" "$_MOSHEL_DIR_CORE_FLAGS"
+}
+
+function _moshell::flags::list() {
+  _moshell::print info "Getting flags in '$_MOSHEL_DIR_CORE_FLAGS':"
+  echo
+  cat $_MOSHEL_DIR_CORE_FLAGS $_MOSHEL_DIR_CORE_FLAGS_OVERRIDE | grep -P "^export" | grep -v "override" | sort | uniq
+  echo
 }
 
 function _moshell::flags() {

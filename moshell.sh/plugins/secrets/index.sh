@@ -1,11 +1,21 @@
-#!/usr/bin/env bash
 #
 # It should load secrets of a previously configured versed repository.
 #
 
+ABSOLUTE_PATH_TO_THIS_FILE="${BASH_SOURCE:-$0}"
+ABSOLUTE_DIR_PATH_TO_THIS_FILE=$(dirname $ABSOLUTE_PATH_TO_THIS_FILE)
+
+if [ ! -f "$ABSOLUTE_DIR_PATH_TO_THIS_FILE/.env.sh" ]; then
+  _moshell:print error "Environment file '.env.sh' is missing at $ABSOLUTE_DIR_PATH_TO_THIS_FILE"
+  exit
+fi
+
+# Load secrets enviroment variables
+source "$ABSOLUTE_DIR_PATH_TO_THIS_FILE/.env.sh"
+
 # Setup your repository to download your secrets
-GIT_OWNER="andersonbosa"
-GIT_REPO="moshell-secrets"
+GIT_OWNER=$_SECRETS_MOSHELL_PLUGIN_GIT_OWNER
+GIT_REPO=$_SECRETS_MOSHELL_PLUGIN_GIT_REPO
 
 # Constants
 GIT_REPO_REFERENCE="$GIT_OWNER/$GIT_REPO"
@@ -14,7 +24,6 @@ LOCAL_PATH="$HOME/.$GIT_REPO"
 # Import according to the standard, source index.sh
 function load_secrets {
   source $LOCAL_PATH/index.sh
-  _moshell::log success "$LOCAL_PATH loaded"
 }
 
 function setup_secrets {

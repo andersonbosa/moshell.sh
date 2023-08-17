@@ -1,4 +1,3 @@
-#!/usr/bin/env bash
 # -*- coding: utf-8 -*-
 
 function howto_convert_svg_to_ico() {

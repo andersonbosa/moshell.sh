@@ -15,7 +15,7 @@ Store your secrets, api-keys and etc in a protected place and keep using them in
 cd ~
 gh repo create moshell-secrets --private --clone
 ```
-2. Configure the following variables (check [./secrets/index.sh](./index.sh))
-  - `GIT_OWNER` - your git username
-  - `GIT_REPO` - your repository name
+2. Configure the following variables in .env.sh (check example [./secrets/.env.sh](./.env.sh.example))
+  - `_MOSHELL_PLUGIN_GIT_OWNER` - your git username
+  - `_MOSHELL_PLUGIN_GIT_REPO` - your repository name
 3. And it's ready to be used! The next time you start Shell the repository will be cloned and Moshell.sh will import your "index.sh".
