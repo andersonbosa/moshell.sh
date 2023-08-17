@@ -39,17 +39,16 @@ Moshell.sh is a framework to persist its customizations without complexity.
 
 ### Getting Started
 
-Download and install:
+#### Install:
 
 ```bash
-  # Download
-  git clone https://github.com/andersonbosa/moshell.sh ~/.moshell.sh
-    
-  # Install by adding the following line to your shell rc (e.g., .bashrc, .zshrc, etc):
-  source ~/.moshell.sh/moshell.sh/moshell.sh
+curl https://raw.githubusercontent.com/andersonbosa/moshell.sh/main/moshell.sh/tools/install.sh | bash -s
+```
 
-  # Validate install
-  moshell version
+#### Uninstall:
+
+```bash
+curl https://raw.githubusercontent.com/andersonbosa/moshell.sh/main/moshell.sh/tools/uninstall.sh | bash -s
 ```
 
 #### Commands:

@@ -1,0 +1,60 @@
+name: "CI"
+# TODO: Test all supported shells (for now BASH and ZSH)
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read # to fetch code (actions/checkout)
+
+jobs:
+  # https://github.com/marketplace/actions/shellcheck
+  shellcheck:
+    name: Shellcheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run ShellCheck
+        uses: ludeeus/action-shellcheck@master
+        env:
+          SHELLCHECK_OPTS: -s bash -e zsh
+
+  tests:
+    name: Run tests
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    if: github.repository == 'andersonbosa/moshell.sh'
+    steps:
+      - name: Set up git repository
+        uses: actions/checkout@v3
+
+      - name: 📚 INSTALL DEPENDENCIES
+        if: runner.os == 'Linux'
+        run: sudo apt-get update; sudo apt-get install bash zsh
+
+      - name: 📊 CHECK SYNTAX
+        run: |
+          for file in ./moshell.sh/moshell.sh \
+            ./moshell.sh/core/*.sh \
+            ./moshell.sh/plugins/**/*.sh \
+            ./moshell.sh/custom/**/*.sh \
+            ./moshell.sh/tools/*.sh; do
+            echo "[DEBUG] Checking syntax from: $file"
+            bash -n "$file" || return 1
+          done
+
+      # TODO: Validate mechanism
+      # See to: https://docs.docker.com/build/ci/github-actions/test-before-push/
+      - name: 🏁 CHECK INSTALLATION
+        run: |
+          curl https://raw.githubusercontent.com/andersonbosa/moshell.sh/main/moshell.sh/tools/install.sh > ~/install.sh
+          bash ~/install.sh || return 1

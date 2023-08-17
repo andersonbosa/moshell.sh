@@ -6,3 +6,9 @@
 # editor configs
 .vscode
 .idea
+
+
+# moshell.sh
+**/.env.sh
+**/.env
+**/*.override

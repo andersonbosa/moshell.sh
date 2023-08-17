@@ -2,6 +2,11 @@ moshell::plugins::index() {
   echo '# This is a index file to import Moshell.sh plugins.'
 }
 
+if [[ $_MOSHELL_LOAD_PLUGINS == 0 ]]; then
+  _moshell::log INFO "Plugins not load. See '_MOSHELL_LOAD_PLUGINS' flag"
+  return 0
+fi
+
 PLUGINS_FOUND=$(ls $_MOSHEL_DIR_PLUGINS/*/index.sh $_MOSHEL_DIR_PLUGINS/*/_index.sh 2>/dev/null)
 PLUGINS_PATH=($(echo $PLUGINS_FOUND | sort -n | uniq))
 
@@ -11,8 +16,8 @@ for script_file in ${PLUGINS_PATH[*]}; do
     # Import script
     source $script_file
 
-    _moshell::log success "Loaded plugin: $script_file"
+    _moshell::log INFO "Loaded plugin: $script_file"
   fi
 done
 
-_moshell::log success "Loaded plugins"
+_moshell::log INFO "Loaded plugins"

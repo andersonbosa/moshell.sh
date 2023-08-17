@@ -1,5 +1,5 @@
-#!/usr/bin/env bash
 # -*- coding: utf-8 -*-
+
 
 function youtube-download() {
   LINK="$1"
@@ -152,12 +152,12 @@ function git_clone_folder() {
 
   if [[ -z "$1" ]]; then
     echo $USAGE
-    return 1
+    return 0
   fi
 
   if [[ -z "$2" ]]; then
     echo $USAGE
-    return 1
+    return 0
   fi
 
   local OWNER_AND_REPO=$1
@@ -237,7 +237,7 @@ function add-react-component() {
   local componentName=$1
 
   if [[ -z "${componentName}" ]]; then
-    return 1
+    return 0
   fi
 
   mkdir -p $componentName
