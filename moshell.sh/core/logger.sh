@@ -1,3 +1,13 @@
+export _MOSHELL_DIR_CORE_LOGGER="${BASH_SOURCE:-$0}"
+
+function _moshell::logger::get_logfile_path() {
+  local datestamp=$(date +%F)
+  local log_filename="${datestamp}.log"
+  local log_filepath="$_MOSHELL_DIR_BASE_PATH/logs/$log_filename"
+
+  echo $log_filepath
+}
+
 # Log messages with different colors based on log level and save to a log file
 # Usage: _moshell::log_and_save log_level message
 function _moshell::log {
@@ -32,6 +42,7 @@ function _moshell::log {
 
   if [[ "$_MOSHELL_FLAG_LOGGING" == 1 ]]; then
 
+    local logpath=$(_moshell::logger::get_logfile_path)
 
     if [[ ! -f $logpath ]] || [ ! -s $logpath ]; then # If file does not exist or is empty
       echo '[DATE]                                [PID]   [TYPE] [MESSAGE]' >>$logpath

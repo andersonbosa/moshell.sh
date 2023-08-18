@@ -33,7 +33,7 @@
 ### Summary
 
 Make your customizations and take them everywhere. What is the difference between "dotfiles"? 
-Moshell.sh is a framework to persist its customizations without complexity.
+moshell.sh is a framework to persist its customizations without complexity.
 
 ---
 
@@ -61,7 +61,10 @@ Available commands:
   help                Print this help message
   edit                Edit moshell configurations
   reload              Reload the configuration
-  update              Update Moshell.sh
+  flags               Update moshell.sh environment variables
+  logs                Get the logs of the day
+  plugins             [TODO] Plugins management
+  update              [TODO] Update moshell.sh
   version             Show the version
 ```
 

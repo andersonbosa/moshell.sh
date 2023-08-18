@@ -44,6 +44,13 @@ function _moshell::reload() {
   return 0
 }
 ###############################################################################
+
+function _moshell::logs() {
+  echo $_MOSHELL_DIR_CORE_LOGGER
+  cat $(_moshell::logger::get_logfile_path)
+  return 0
+}
+
 ###############################################################################
 
 function _moshell::version() {
@@ -120,11 +127,8 @@ function _moshell::flags::update() {
   # [optional] Uncomment to update the original flags file
   # sed -i "s/^export $flag_name=.*/export $flag_name=$new_value/" "$_MOSHELL_DIR_CORE_FLAGS"
 
-function _moshell::flags::list() {
-  _moshell::print info "Getting flags in '$_MOSHEL_DIR_CORE_FLAGS':"
-  echo
-  cat $_MOSHEL_DIR_CORE_FLAGS $_MOSHEL_DIR_CORE_FLAGS_OVERRIDE | grep -P "^export" | grep -v "override" | sort | uniq
-  echo
+  # List flags to
+  _moshell::flags::list
 }
 
 function _moshell::flags() {
@@ -152,6 +156,7 @@ Available commands:
   edit                Edit moshell configurations
   reload              Reload the configuration
   flags               Update moshell.sh environment variables
+  logs                Get the logs of the day
   plugins             [TODO] Plugins management
   update              [TODO] Update moshell.sh
   version             Show the version
@@ -161,7 +166,7 @@ EOF
 
 ###############################################################################
 
-# TODO: i do not know 
+# TODO: i do not know
 # function _moshell() {
 #   local -a cmds subcmds
 #   cmds=(
