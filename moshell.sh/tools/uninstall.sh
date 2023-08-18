@@ -5,12 +5,12 @@ echo "-------------------------------------------------------------------------"
 
 # Check if ~/.moshell.sh directory exists
 if [ ! -d "$HOME/.moshell.sh" ]; then
-  echo "Moshell.sh is not installed."
+  echo "moshell.sh is not installed."
   exit 1
 fi
 
-# Remove the Moshell.sh directory
-echo "Removing Moshell.sh..."
+# Remove the moshell.sh directory
+echo "Removing moshell.sh..."
 rm -rf "$HOME/.moshell.sh"
 
 # Detect user's shell
@@ -29,10 +29,10 @@ if [ "$user_shell" = "zsh" ] && [ -n "$(command -v zsh)" ]; then
 fi
 
 # Inform the user that uninstallation is complete
-echo "Moshell.sh has been successfully uninstalled from $user_shell."
+echo "moshell.sh has been successfully uninstalled from $user_shell."
 
 # Validate the uninstall
-moshell version || echo "Moshell.sh is not found. Uninstallation is successful."
+moshell version || echo "moshell.sh is not found. Uninstallation is successful."
 
 # Reload the shell
 exec "$user_shell"

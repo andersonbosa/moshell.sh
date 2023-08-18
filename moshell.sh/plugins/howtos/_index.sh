@@ -1,3 +1,1 @@
-ABSOLUTE_PATH_TO_THIS_FILE="${BASH_SOURCE:-$0}"
-ABSOLUTE_DIR_PATH_TO_THIS_FILE=$(dirname $ABSOLUTE_PATH_TO_THIS_FILE)
-
+# TODO: Plugin that teaches/shows how to do something

@@ -18,4 +18,4 @@ gh repo create moshell-secrets --private --clone
 2. Configure the following variables in .env.sh (check example [./secrets/.env.sh](./.env.sh.example))
   - `_MOSHELL_PLUGIN_GIT_OWNER` - your git username
   - `_MOSHELL_PLUGIN_GIT_REPO` - your repository name
-3. And it's ready to be used! The next time you start Shell the repository will be cloned and Moshell.sh will import your "index.sh".
+3. And it's ready to be used! The next time you start Shell the repository will be cloned and moshell.sh will import your "index.sh".

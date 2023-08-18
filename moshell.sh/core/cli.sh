@@ -16,46 +16,39 @@ function _moshell::confirm() {
   fi
 }
 
+###############################################################################
 ## User-facing commands
 
-function _moshell::help() {
-  cat >&2 <<EOF
-Usage: moshell <command> [options]
-
-Available commands:
-
-  help                Print this help message
-  edit                Edit moshell configurations
-  reload              Reload the configuration
-  flags               Update Moshell.sh environment variables
-  plugins             [TODO] Plugins management
-  update              [TODO] Update Moshell.sh
-  version             Show the version
-
-EOF
-}
-
 function _moshell::edit() {
-  if [[ -z "$EDITOR" ]]; then
-    _moshell::log info "Using default EDITOR"
-    EDITOR=$(which vi)
+
+  if [[ -z "$_MOSHELL_FLAG_EDITOR" ]]; then
+    _moshell::log info "Using default system EDITOR=$EDITOR"
+    export _MOSHELL_FLAG_EDITOR=$EDITOR
+  fi
+  if [[ -z "$_MOSHELL_FLAG_EDITOR" ]]; then
+    _moshell::log info "Setting vi as default moshell EDITOR"
+    export _MOSHELL_FLAG_EDITOR=$(which vi)
   fi
 
   _moshell::log info "Openning in your prefered editor: $EDITOR... "
   sleep 1
-  $EDITOR $_MOSHEL_DIR_BASE_PATH
+  $_MOSHELL_FLAG_EDITOR $_MOSHELL_DIR_BASE_PATH
   return 0
 }
 
+###############################################################################
+
 function _moshell::reload() {
-  _moshell::log info $msg
-  source "$_MOSHEL_DIR_BASE_PATH/moshell.sh"
+  source "$_MOSHELL_DIR_BASE_PATH/moshell.sh"
+  _moshell::log success "moshell.sh reloaded"
   return 0
 }
+###############################################################################
+###############################################################################
 
 function _moshell::version() {
   (
-    cd "$_MOSHEL_DIR_BASE_PATH"
+    cd "$_MOSHELL_DIR_BASE_PATH"
 
     # Get the version name:
     # 1) try tag-like version
@@ -70,11 +63,25 @@ function _moshell::version() {
     # Get short hash for the current HEAD
     local commit=$(command git rev-parse --short HEAD 2>/dev/null)
 
-    local local_version=$(cat $_MOSHEL_DIR_BASE_PATH/version)
+    local local_version=$(cat $_MOSHELL_DIR_BASE_PATH/version)
 
     # Show version and commit hash
     printf "[%s] %s (%s)\n" "$local_version" "$remote_version" "$commit"
   )
+}
+
+###############################################################################
+
+function _moshell::flags::list() {
+  # TODO: improvement: use `colorize_cat` to add some styles here 😎
+  _moshell::print info "Getting flags from '$_MOSHELL_DIR_CORE_FLAGS'"
+  echo
+  echo "[DEFAULTS]"
+  cat $_MOSHELL_DIR_CORE_FLAGS | grep -P "^export" | sort
+  echo
+  echo "[OVERRIDES]"
+  cat $_MOSHELL_DIR_CORE_FLAGS_OVERRIDE | grep -P "^export" | sort
+  echo
 }
 
 # Updates a flag in the flags configuration file and its override file.
@@ -87,7 +94,7 @@ function _moshell::version() {
 #   - new_value: The new value to set for the flag.
 #
 # Example:
-#   _moshell::flags::update _MOSHELL_LOGGING 1
+#   _moshell::flags::update _MOSHELL_FLAG_LOGGING 1
 function _moshell::flags::update() {
   local flag_name="$1"
   local new_value="$2"
@@ -97,21 +104,21 @@ function _moshell::flags::update() {
     return 1
   fi
 
-  _MOSHEL_DIR_CORE_FLAGS_OVERRIDE="${_MOSHEL_DIR_CORE_FLAGS}.override"
-  touch "$_MOSHEL_DIR_CORE_FLAGS_OVERRIDE"
+  _MOSHELL_DIR_CORE_FLAGS_OVERRIDE="${_MOSHELL_DIR_CORE_FLAGS}.override"
+  touch "$_MOSHELL_DIR_CORE_FLAGS_OVERRIDE"
 
   # Check if the flag exists in the override file
-  if grep -qF "export $flag_name=" "$_MOSHEL_DIR_CORE_FLAGS_OVERRIDE"; then
+  if grep -qF "export $flag_name=" "$_MOSHELL_DIR_CORE_FLAGS_OVERRIDE"; then
     # Update the existing entry in the override file
-    sed -i "s/^export $flag_name=.*/export $flag_name=$new_value/" "$_MOSHEL_DIR_CORE_FLAGS_OVERRIDE"
+    sed -i "s/^export $flag_name=.*/export $flag_name=$new_value/" "$_MOSHELL_DIR_CORE_FLAGS_OVERRIDE"
   else
     # Add a new entry to the override file
-    echo "export $flag_name=$new_value" >>"$_MOSHEL_DIR_CORE_FLAGS_OVERRIDE"
+    echo >>$_MOSHELL_DIR_CORE_FLAGS_OVERRIDE
+    echo "export $flag_name=$new_value" >>"$_MOSHELL_DIR_CORE_FLAGS_OVERRIDE"
   fi
 
   # [optional] Uncomment to update the original flags file
-  # sed -i "s/^export $flag_name=.*/export $flag_name=$new_value/" "$_MOSHEL_DIR_CORE_FLAGS"
-}
+  # sed -i "s/^export $flag_name=.*/export $flag_name=$new_value/" "$_MOSHELL_DIR_CORE_FLAGS"
 
 function _moshell::flags::list() {
   _moshell::print info "Getting flags in '$_MOSHEL_DIR_CORE_FLAGS':"
@@ -133,21 +140,44 @@ function _moshell::flags() {
   return 0
 }
 
-function _moshell() {
-  local -a cmds subcmds
-  cmds=(
-    'help:Print this help message'
-    'edit:Edit moshell configurations'
-    'reload:Reload the configuration'
-    'flags:Update Moshell.sh environment variables'
-    'update:Update Moshell.sh'
-    'version:Show the version'
-  )
+###############################################################################
 
-  # TODO: process commands
+function _moshell::help() {
+  cat >&2 <<EOF
+Usage: moshell <command> [options]
 
-  return 0
+Available commands:
+
+  help                Print this help message
+  edit                Edit moshell configurations
+  reload              Reload the configuration
+  flags               Update moshell.sh environment variables
+  plugins             [TODO] Plugins management
+  update              [TODO] Update moshell.sh
+  version             Show the version
+
+EOF
 }
+
+###############################################################################
+
+# TODO: i do not know 
+# function _moshell() {
+#   local -a cmds subcmds
+#   cmds=(
+#     'help:Print this help message'
+#     'edit:Edit moshell configurations'
+#     'reload:Reload the configuration'
+#     'flags:Update moshell.sh environment variables'
+#     'logs:Get the logs of the day'
+#     'update:Update moshell.sh'
+#     'version:Show the version'
+#   )
+
+#   # TODO: process commands here
+
+#   return 0
+# }
 
 function moshell() {
   [[ $# -gt 0 ]] || {

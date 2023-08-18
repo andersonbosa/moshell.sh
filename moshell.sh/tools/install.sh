@@ -11,12 +11,12 @@ fi
 
 # Check if ~/.moshell.sh directory already exists
 if [ -d "$HOME/.moshell.sh" ]; then
-  echo "The directory ~/.moshell.sh already exists. Moshell.sh may already be installed."
+  echo "The directory ~/.moshell.sh already exists. moshell.sh may already be installed."
   exit 1
 fi
 
 # Cloning the repository
-echo "Cloning the Moshell.sh repository..."
+echo "Cloning the moshell.sh repository..."
 if git clone https://github.com/andersonbosa/moshell.sh ~/.moshell.sh; then
   echo "Repository cloned successfully."
 else
@@ -44,7 +44,7 @@ if [ "$user_shell" = "zsh" ] && [ -n "$(command -v zsh)" ]; then
 fi
 
 # Inform the user that installation is complete
-echo "Moshell.sh has been successfully installed for $user_shell."
+echo "moshell.sh has been successfully installed for $user_shell."
 if [ "$bash_installed" = true ]; then
   source ~/.bashrc
 fi

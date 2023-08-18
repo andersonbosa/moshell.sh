@@ -26,15 +26,12 @@ function _moshell::log {
   esac
 
   # Log to the terminal with colors
-  if [[ "$_MOSHELL_VERBOSE" == 1 ]]; then
+  if [[ "$_MOSHELL_FLAG_VERBOSE" == 1 ]]; then
     printf "${log_colors}${word_colors}[%s]${log_reset}: %s\n" "$logtype" "$message" >&2
   fi
 
-  if [[ "$_MOSHELL_LOGGING" == 1 ]]; then
-    # Save to log file
-    local PID=$$
-    local logfile="$(date +%F)_$PID_.log"
-    local logpath="$_MOSHEL_DIR_BASE_PATH/logs/$logfile"
+  if [[ "$_MOSHELL_FLAG_LOGGING" == 1 ]]; then
+
 
     if [[ ! -f $logpath ]] || [ ! -s $logpath ]; then # If file does not exist or is empty
       echo '[DATE]                                [PID]   [TYPE] [MESSAGE]' >>$logpath
@@ -45,8 +42,8 @@ function _moshell::log {
 }
 
 function _moshell::print() {
-  if [[ $_MOSHELL_VERBOSE == 0 ]]; then
-    _MOSHELL_VERBOSE=1
+  if [[ $_MOSHELL_FLAG_VERBOSE == 0 ]]; then
+    _MOSHELL_FLAG_VERBOSE=1
     _moshell::log "$@"
   else
     _moshell::log "$@"
