@@ -21,8 +21,7 @@ _moshell::log success "moshell.sh version '$(mo version)' initialized!"
 
 [[ "$_MOSHELL_FLAG_VERBOSE" == 1 ]] && _moshell::banner::print
 
-_moshell::log success "Moshell.sh version '$(mo version)' initialized!"
-[[ "$_MOSHELL_VERBOSE" == 1 ]] && _moshell::banner::print
+(_moshell:tracking_service &) # DISCLAIMER: Run tracking without trap user CLI
 
 ###############################################################################
 # TODO: I tried to perform import in a dynamic way but it was not possible ...

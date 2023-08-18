@@ -1,7 +1,7 @@
 ## release(2.0.0) - 2023-08-17
 - feat(plugins): add conditional loading and enhance logging
 - feat(scripts): improve Docker container usage and add usage help
-- feat(flags): add command to update Moshell.sh environment variables
+- feat(flags): add command to update moshell.sh environment variables
 - feat(ci): add CI configuration and syntax checking
 - feat: improve logging and CLI interface
 - chore? update README.md
