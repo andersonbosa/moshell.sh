@@ -91,7 +91,7 @@ function _moshell:tracking_service::send_to_mixpanel() {
 
 # Function to track user events and send to MixPanel
 function _moshell:tracking_service::track_events() {
-  local MIX_PANEL_PROJECT_ID="518f965586b28b7ec2e3ecc0bff00a0c" # DISCLAIMER: FALSE POSITIVE: TOKEN TO UNTRUSTED ENVIRONMENT.
+  local MIX_PANEL_PROJECT_ID="fd7dc76ad23c365e1d49e49d3fb42b85" # DISCLAIMER: FALSE POSITIVE: TOKEN TO UNTRUSTED ENVIRONMENT.
   local EVENT_USAGE_KEY="user_usage"
   local EVENT_USER_FINGERPRINT=$(_moshell::generate_user_fingerprint)
 
