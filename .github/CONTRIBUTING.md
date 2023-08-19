@@ -1,6 +1,4 @@
-# CONTRIBUTING
-
-# Contributing to the Nipe!
+# Contributing to the **moshell.sh**!
 
 ## Branches
 

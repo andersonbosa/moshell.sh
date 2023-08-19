@@ -1,7 +1,7 @@
 <section align="center">
   <br>
   <br>
-  <img src="docs/banner.svg" title="Project banner" alt="Project banner" />
+  <img src="docs/assets/banner.svg" title="Project banner" alt="Project banner" />
 
   <p>
   <p>Fork, customize and take your shell everywhere.</p>
@@ -33,7 +33,7 @@
 ### Summary
 
 Make your customizations and take them everywhere. What is the difference between "dotfiles"? 
-moshell.sh is a framework to persist its customizations without complexity.
+**moshell.sh** is a framework to persist its customizations without complexity!
 
 ---
 

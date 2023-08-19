@@ -9,6 +9,7 @@ fi
 
 # NOTE: The order matters
 source "$_MOSHELL_DIR_CUSTOM/andersonbosa/ai_prompts.sh"
+source "$_MOSHELL_DIR_CUSTOM/andersonbosa/aliases.sh"
 source "$_MOSHELL_DIR_CUSTOM/andersonbosa/docker.sh"
 source "$_MOSHELL_DIR_CUSTOM/andersonbosa/generators.sh"
 source "$_MOSHELL_DIR_CUSTOM/andersonbosa/randoms.sh"

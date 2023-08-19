@@ -1,44 +1,103 @@
 #!/usr/bin/env bash
-# -*- coding: utf-8 -*-
+#
+# Author: @andersonbosa
+# Description:
+#   XXX
+#
 
-# Constants
-LAST_CONSIDERATED_CMMIT=$1
+ABSOLUTE_SCRIPT_FILE_PATH="${BASH_SOURCE:-$0}"
+ABSOLUTE_SCRIPT_DIR_PATH=$(dirname "$ABSOLUTE_SCRIPT_FILE_PATH")
 
-# Generate a changelog from Git commit messages
-ABSOLUTE_PATH_TO_THIS_FILE="${BASH_SOURCE:-$0}"
-ABSOLUTE_DIR_PATH_TO_THIS_FILE=$(dirname $ABSOLUTE_PATH_TO_THIS_FILE)
+function __moshell:tools::changelog::get_last_release_commit() {
+  local release_version_regex="$1"
 
-# Set the output file for the changelog
-changelog_file="$ABSOLUTE_DIR_PATH_TO_THIS_FILE/../../CHANGELOG.md"
-
-# Add spaces to changelog file
->>"$changelog_file"
-
-# Specify the list of keys to include in the changelog
-keys=("build" "chore" "docs" "feat" "fix" "perf" "refactor" "style" "test" "release")
-
-# Function to add header levels based on the key
-function add_header() {
-  local key="$1"
-  local message="$2"
-
-  if [ "$key" == "release" ]; then
-    echo "## $message - $(date --iso-8601=date)" >>"$changelog_file"
-  else
-    echo "- $message" >>"$changelog_file"
+  if [[ -z "$release_version_regex" ]]; then
+    local default_regex="release([0-9]\+\.[0-9]\+\.[0-9]\+)"
+    release_version_regex=$default_regex
   fi
+
+  local awk_query_2_item_on_the_row='NR==2'
+  local last_release_commit=$(git log --grep="$release_version_regex" --pretty=format:"%H" | awk "$awk_query_2_item_on_the_row")
+
+  echo "$last_release_commit"
 }
 
-# Iterate over commits and extract messages
-git log --pretty=format:"%s" HEAD $LAST_CONSIDERATED_CMMIT | while read -r commit_message; do
-  for key in "${keys[@]}"; do
-    if [[ "$commit_message" == "$key"* ]]; then
-      add_header "$key" "$commit_message"
-      break
-    fi
-  done
-done
+# Function to add header levels based on the key
+function __moshell:tools::changelog::parse_commit_format() {
+  local commit_hash="$1"
+  local author="$2"
+  local date="$3"
+  shift 3 # Shifts the first 3 arguments
+  local commit_message="$@"
+  local link_to_repository="https://github.com/andersonbosa/moshell.sh"
 
-echo -e "\n\n" >>"$changelog_file"
+  # Specify the list of keys to include in the changelog
+  declare -a semantic_keys=("build" "chore" "docs" "feat" "fix" "perf" "refactor" "style" "test" "release")
 
-echo "Changelog generated and saved to $changelog_file"
+  case "$commit_message" in
+  release*)
+    cat <<EOF
+## $commit_message - $date
+
+> - [Commit $commit_hash]($link_to_repository/commit/$commit_hash)\r
+EOF
+    ;;
+  *)
+    echo -e "\n- $commit_message\r"
+    ;;
+  esac
+}
+
+function __moshell:tools::changelog::parse_line_to_changelog() {
+  local line="$@"
+
+  local fields_delimiter=","
+  IFS="$fields_delimiter" read -r -a fields <<<"$line"
+
+  local commit_hash="${fields[0]}"
+  local author="${fields[1]}"
+  local date="${fields[2]}"
+  local message="${fields[3]}"
+
+  # echo -e $commit_hash $author $date $message
+  __moshell:tools::changelog::parse_commit_format $commit_hash $author $date $message
+}
+
+function __moshell:tools::changelog::main() {
+  LAST_CONSIDERATED_COMMIT=$(__moshell:tools::changelog::get_last_release_commit)
+  # echo "[+] Using commit: $LAST_CONSIDERATED_COMMIT"
+
+  local changelog_file="$_MOSHELL_DIR_BASE_PATH/../docs/CHANGELOG.md"
+  local changelog_file_content_backup=""
+
+  if [ -f "$changelog_file" ]; then
+    changelog_file_content_backup=$(cat "$changelog_file")
+  fi
+
+  # Cleans/init the file
+  >"$changelog_file"
+
+  local tmp_file=$(mktemp)
+  git log --pretty=format:"%h,%an,%as,%s" "$LAST_CONSIDERATED_COMMIT..HEAD" >"$tmp_file"
+
+  local tmp_file_reversed=$(mktemp)
+  awk '{a[i++]=$0} END {for (j=i-1; j>=0;) print a[j--] }' $tmp_file >$tmp_file_reversed
+  # TODO: add awk as script dependency
+
+  while IFS=$line_delimiter read -r line; do
+    parsed_line=$(__moshell:tools::changelog::parse_line_to_changelog $line)
+    # echo -e "parsed_line: $parsed_line"
+    # echo -e "line: $line"
+    echo -e "$parsed_line" >>$changelog_file
+  done <<<$(cat $tmp_file)
+
+  rm $tmp_file $tmp_file_reversed &>/dev/null
+  # cat $tmp_file
+  # echo "------"
+  # cat $reversed_tmp_file #&>/dev/null
+
+  echo -e "\r$changelog_file_content_backup" >>"$changelog_file"
+  # echo "[+] Changelog generated and saved to: '$changelog_file'"
+}
+
+__moshell:tools::changelog::main
