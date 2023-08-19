@@ -17,11 +17,6 @@ The collected data will help us understand how often our application is being us
 Available flags:
   - `_MOSHELL_FLAG_ENABLE_TRACKING_SERVICE` - 0/1 - Disable/enables tracking service
   - `_MOSHELL_FLAG_ENABLE_TRACKING_FINGERPRINT` - 0/1 - Disable/enables the use of non-sensitive information when generating Hash to the user ID
-  
-<!-- 
-TODO: create informative section in documentation to this
-> See more about how disable anon-usage-tracking here: ______________________ 
--->
 
 
 ## What Data We Collect:

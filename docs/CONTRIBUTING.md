@@ -30,5 +30,5 @@ under the [project license](../LICENSE.md).
 ---
 
 Thank you once again for your interest in contributing! We appreciate your time 
-and effort, and together we can make this project even better! 🚀🌟
+and effort, and together we can make this project even better! ❤️
 
