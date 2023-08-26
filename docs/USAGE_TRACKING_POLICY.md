@@ -12,11 +12,20 @@ The collected data will help us understand how often our application is being us
 #### Your Options:
 
 - Opt-In: By continuing to use the application, you are agreeing to participate in our usage tracking initiative. We appreciate your support in helping us improve the application.
-- Opt-Out: If you prefer not to participate, you can easily opt out of usage tracking. Simply update the flag `_MOSHELL_FLAG_ENABLE_TRACKING_SERVICE` below and your usage data will not be collected. But if you want to participate without informing the data generated for hash id (see [What Data We Collect](#what-data-we-collect)), you can only disable this functionality with the flag`_MOSHELL_FLAG_ENABLE_TRACKING_FINGERPRINT`
+- Opt-In: If you want to help us and participate, you can easily opt in of usage tracking. Simply update the flag `_MOSHELL_FLAG_ENABLE_TRACKING_SERVICE` to value 1 and your usage data will be collected. But if you want to participate without informing the data generated for hash id (see [What Data We Collect](#what-data-we-collect)), you can only disable this functionality with the flag`_MOSHELL_FLAG_ENABLE_TRACKING_FINGERPRINT` value 0.
   
 Available flags:
   - `_MOSHELL_FLAG_ENABLE_TRACKING_SERVICE` - 0/1 - Disable/enables tracking service
   - `_MOSHELL_FLAG_ENABLE_TRACKING_FINGERPRINT` - 0/1 - Disable/enables the use of non-sensitive information when generating Hash to the user ID
+
+How update flags using the Moshell.sh CLI?
+```bash
+# enable usage tracking
+mo flags _MOSHELL_FLAG_ENABLE_TRACKING_SERVICE 1
+
+# disable fingerprint collection (user distinction hash)
+mo flags _MOSHELL_FLAG_ENABLE_TRACKING_FINGERPRINT 0 
+```
 
 
 ## What Data We Collect:
