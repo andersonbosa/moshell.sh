@@ -101,7 +101,7 @@ Available commands:
 
 ### Contribution
 
-Your contributions and suggestions are heartily ♥ welcome. [See here the contribution guidelines.](docs/CONTRIBUTING.md)
+Your contributions and suggestions are hearty ♥ welcome. [See here the contribution guidelines.](docs/CONTRIBUTING.md)
 Please, report bugs via [issues page](https://github.com/andersonbosa/moshell.sh/issues).
 
 ---
@@ -113,6 +113,8 @@ This work is licensed under [MIT License.](/LICENSE.md)
 ---
 
 ### Usage Tracking Notice
+
+> By default, usage tracking is disabled. If you want to help us you can see in [this section](https://github.com/andersonbosa/moshell.sh/blob/main/docs/USAGE_TRACKING_POLICY.md#your-options) how easy is to help us.
 
 We value your privacy and want to ensure you are informed about our usage tracking
 practices. When you use our CLI, we generate a unique hashed identifier based on 
