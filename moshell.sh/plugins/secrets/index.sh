@@ -6,7 +6,7 @@ ABSOLUTE_PATH_TO_THIS_FILE="${BASH_SOURCE:-$0}"
 ABSOLUTE_DIR_PATH_TO_THIS_FILE=$(dirname $ABSOLUTE_PATH_TO_THIS_FILE)
 
 if [ ! -f "$ABSOLUTE_DIR_PATH_TO_THIS_FILE/.env.sh" ]; then
-  _moshell:print error "Environment file '.env.sh' is missing at $ABSOLUTE_DIR_PATH_TO_THIS_FILE"
+  _moshell::print error "Environment file '.env.sh' is missing at $ABSOLUTE_DIR_PATH_TO_THIS_FILE"
   exit
 fi
 

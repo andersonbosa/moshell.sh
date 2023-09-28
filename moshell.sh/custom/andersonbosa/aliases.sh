@@ -1,4 +1,6 @@
 alias copy="clipcopy"
+alias gor="go run"
+alias gob="go build"
 
 function pince() {
   local pince_dir_path="$HOME/tools/PINCE/"

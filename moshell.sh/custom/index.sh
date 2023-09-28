@@ -4,16 +4,19 @@ _moshell::custom::index() {
 
 if [[ $_MOSHELL_FLAG_ENABLE_LOAD_CUSTOMS == 0 ]]; then
   _moshell::log INFO "Customs not load. See '_MOSHELL_FLAG_ENABLE_LOAD_CUSTOMS' flag"
-  return 0
+  exit 0
 fi
 
-# NOTE: The order matters
-source "$_MOSHELL_DIR_CUSTOM/andersonbosa/ai_prompts.sh"
-source "$_MOSHELL_DIR_CUSTOM/andersonbosa/aliases.sh"
-source "$_MOSHELL_DIR_CUSTOM/andersonbosa/docker.sh"
-source "$_MOSHELL_DIR_CUSTOM/andersonbosa/generators.sh"
-source "$_MOSHELL_DIR_CUSTOM/andersonbosa/randoms.sh"
-source "$_MOSHELL_DIR_CUSTOM/andersonbosa/termbin.sh"
-source "$_MOSHELL_DIR_CUSTOM/andersonbosa/workrounds.sh"
+# NOTE: To extend is easy, create your customization directory following "index.sh"
+# format of the "andersonbosa" directory and is ready to add new customizations.
+USERNAMES=(
+  "andersonbosa"
+)
 
-_moshell::log INFO "Loaded customizations."
+for user_dir in ${USERNAMES[@]}; do
+  customizations_path=${_MOSHELL_DIR_CUSTOM}/${user_dir}/index.sh
+  source $customizations_path
+  _moshell::log INFO "Loaded customizations from: $customizations_path"
+done
+
+_moshell::log SUCCESS "Loaded all customizations."

@@ -146,6 +146,28 @@ function _moshell::flags() {
 
 ###############################################################################
 
+function _moshell::plugins() {
+  plugins_found=($(ls -l $_MOSHELL_DIR_PLUGINS | grep -P "^d" | awk '{print $9}'))
+
+  cat >&2 <<EOF
+
+PLUGINS FOUND:
+
+$(echo $plugins_found)
+
+PLUGINS AVAILABLE:
+
+$(echo $plugins_available)
+
+PLUGINS CLIs:
+
+$(echo $plugins_available_cli)
+
+EOF
+}
+
+###############################################################################
+
 function _moshell::help() {
   cat >&2 <<EOF
 Usage: moshell <command> [options]

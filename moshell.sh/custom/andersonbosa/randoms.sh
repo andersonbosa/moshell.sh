@@ -266,6 +266,6 @@ function dvim() {
 }
 
 function git_init_work() {
-  git commit --allow-empty -m "$(current_branch)"
-  git push -u origin $(current_branch)
+  git commit --allow-empty -m "$(git_current_branch)"
+  git push -u origin $(git_current_branch)
 }
