@@ -1,4 +1,5 @@
 alias copy="clipcopy"
+alias k=kubectl
 
 function pince() {
   local pince_dir_path="$HOME/tools/PINCE/"

@@ -103,7 +103,7 @@ function tmux-save-pane() {
 function git-checkpoint() {
   # add all to git and commit
   git add --all
-  git commit -m "Checkpoint"
+  git commit -m "checkpoint: $@"
   git push
 }
 
@@ -266,6 +266,6 @@ function dvim() {
 }
 
 function git_init_work() {
-  git commit --allow-empty -m "$(current_branch)"
-  git push -u origin $(current_branch)
+  git commit --allow-empty -m "$(git_current_branch)"
+  git push -u origin $(git_current_branch)
 }

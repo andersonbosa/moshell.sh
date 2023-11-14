@@ -6,16 +6,16 @@ ABSOLUTE_PATH_TO_THIS_FILE="${BASH_SOURCE:-$0}"
 ABSOLUTE_DIR_PATH_TO_THIS_FILE=$(dirname $ABSOLUTE_PATH_TO_THIS_FILE)
 
 if [ ! -f "$ABSOLUTE_DIR_PATH_TO_THIS_FILE/.env.sh" ]; then
-  _moshell:print error "Environment file '.env.sh' is missing at $ABSOLUTE_DIR_PATH_TO_THIS_FILE"
-  exit
+  _moshell::print error "Environment file '.env.sh' is missing at $ABSOLUTE_DIR_PATH_TO_THIS_FILE"
+  exit 0
 fi
 
 # Load secrets enviroment variables
 source "$ABSOLUTE_DIR_PATH_TO_THIS_FILE/.env.sh"
 
 # Setup your repository to download your secrets
-GIT_OWNER=$_SECRETS_MOSHELL_PLUGIN_GIT_OWNER
-GIT_REPO=$_SECRETS_MOSHELL_PLUGIN_GIT_REPO
+GIT_OWNER=$_MOSHELL_PLUGIN_GIT_OWNER
+GIT_REPO=$_MOSHELL_PLUGIN_GIT_REPO
 
 # Constants
 GIT_REPO_REFERENCE="$GIT_OWNER/$GIT_REPO"
