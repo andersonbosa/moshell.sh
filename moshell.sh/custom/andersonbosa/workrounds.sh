@@ -15,3 +15,10 @@ function fix-ssh-key-permissions() {
   chmod 644 $HOME/.ssh/*.pub
   unset SSHPath
 }
+
+function yt-dlp() { $HOME/.venv/bin/yt-dlp $@ ; }
+
+function create_clean_architecture_folder_structure() {
+  mkdir -p src/{entities,usecases,configs,ports,controllers,modules,infraestructure,utils}  ;
+}
+

@@ -1,22 +1,10 @@
 # -*- coding: utf-8 -*-
 
-
-function youtube-download() {
-  LINK="$1"
-
-  cd $HOME/Videos
-
-  yt-dlp -v --add-metadata -f 22 -o '%(title)s-%(upload_date)s.%(ext)s' $LINK
-
-  echo "$LINK saved in $(pwd)"
-  return 0
-}
-
-function translate() {
+translate() {
   sr translate -from="portugues" -to="en" "$@"
 }
 
-function weather() {
+weather() {
   if [ -z "$1" ]; then # if string empty
     curl "https://wttr.in/"
   else
@@ -25,11 +13,11 @@ function weather() {
   fi
 }
 
-function find-easy() {
+find-easy() {
   find . -name "*$1*"
 }
 
-function get-port-connections() {
+get-port-connections() {
   local system_name="$(lsb_release -si)"
 
   if [[ $system_name = "ManjaroLinux" ]]; then
@@ -41,7 +29,7 @@ function get-port-connections() {
   unset system_name
 }
 
-function pomodoro() {
+pomodoro() {
   local pom_time="$1"
   local final_phrase="$2"
   local speak_in="$3"
@@ -51,47 +39,48 @@ function pomodoro() {
   fi
 
   if [[ -z $final_phrase ]]; then
-    final_phrase='terminou! parabéns!'
+    final_phrase="Você terminou $pom_time de trabalho, parabéns!"
   fi
 
   if [[ -z $speak_in ]]; then
     speak_in="pt-br"
   fi
 
-  termdown $pom_time &&
-    espeak-ng -v "$speak_in" "$final_phrase"
+  $HOME/.venv/bin/termdown $pom_time &&
+    notify-send "Pomodoro" $final_phrase &&
+    espeak-ng -v "$speak_in" "$final_phrase" 2>/dev/null
 
   unset pom_time final_phrase
 }
 
-function get_vpn_ip() {
+get_vpn_ip() {
   ip a | grep tun | grep inet | cut -d " " -f 6-6 | cut -d "/" -f -1
 }
 
-function listen() {
+listen() {
   local port_to_listen="$1"
 
   echo "# Listenning connections port: $port_to_listen"
   nc -vnlp $port_to_listen | tee -a ./listen.log
 }
 
-function zipit() {
+zipit() {
   # usage: zipit /path/name  -> /path/name.zip
   local file_to_zip="$1"
   zip -r "${file_to_zip}.zip" "$file_to_zip" &&
     echo "# Zipped! ~"
 }
 
-function pfind() {
+pfind() {
   echo 'USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND'
   ps -au | grep $@
 }
 
-function datestamp() {
+datestamp() {
   date +%Y-%m-%d__%H-%M-%S__%s
 }
 
-function tmux-save-pane() {
+tmux-save-pane() {
   TMP_PATH_FILE=$1
   if [[ -z "${TMP_PATH_FILE}" ]]; then
     local TMP_PATH_FILE="/tmp/tmux.output.$(datestamp).txt"
@@ -100,14 +89,17 @@ function tmux-save-pane() {
   echo "$TMP_PATH_FILE"
 }
 
-function git-checkpoint() {
-  # add all to git and commit
-  git add --all
-  git commit -m "checkpoint: $@"
+git-checkpoint() {
+  local commit_msg="$@"
+  if [ -z $commit_msg ]; then
+    commit_msg="dumb commit"
+  fi
+  git add .
+  git commit -m $commit_msg
   git push
 }
 
-function wtf() {
+wtf() {
   echo "[+] whatis:"
   whatis $1
   echo
@@ -137,7 +129,7 @@ function wtf() {
   echo
 }
 
-function dawscli() {
+dawscli() {
   # https://docs.aws.amazon.com/cli/latest/userguide/getting-started-docker.html
   docker run --rm \
     -it \
@@ -147,7 +139,7 @@ function dawscli() {
   amazon/aws-cli $@
 }
 
-function git_clone_folder() {
+git_clone_folder() {
   local USAGE='usage: git_clone_folder owner/repo repo_folder/sub_folder'
 
   if [[ -z "$1" ]]; then
@@ -181,11 +173,11 @@ function git_clone_folder() {
   echo "[INFO] Extracted to folder: $DST_PATH"
 }
 
-function find_commit() {
+find_commit() {
   git branch --contains=$1 | grep $2
 }
 
-function watch_deploy() {
+watch_deploy() {
   local COMMIT_TO_IDENTIFY=$1
   local MESSAGE=$2
   local BRANCH_TO_FIND=$3
@@ -202,15 +194,15 @@ function watch_deploy() {
   watch -g -n 10 "find_commit $COMMIT_TO_IDENTIFY $MESSAGE && notify-send "Commit Identified!" "$MESSAGE""
 }
 
-function get_graphql_schema() {
+get_graphql_schema() {
   get-graphql-schema --header "X-API-KEY=$FLOW_API_KEY" $FLOW_API_URL/graphql >/tmp/graphql_schema
 }
 
-function create_venv() {
+create_venv() {
   python3 -m venv .venv
 }
 
-function ffmpeg_screenrecorder() {
+ffmpeg_screenrecorder() {
   OUTPUT_PATH=$1
 
   echo "[🔴] PRESS CTRL+C TO STOP"
@@ -218,12 +210,12 @@ function ffmpeg_screenrecorder() {
   echo "[🟢] Stored in: $OUTPUT_PATH"
 }
 
-function rm-apt-repository() {
+rm-apt-repository() {
   local REPO="$1"
   sudo add-apt-repository --remove "$REPO"
 }
 
-function pysource() {
+pysource() {
   declare -a FILES=(
     'venv/bin/activate'
     '.venv/bin/activate'
@@ -233,7 +225,7 @@ function pysource() {
   done
 }
 
-function add-react-component() {
+add-react-component() {
   local componentName=$1
 
   if [[ -z "${componentName}" ]]; then
@@ -244,28 +236,59 @@ function add-react-component() {
   touch $componentName/index.{js,css}
 }
 
-function pycache_clean() {
+pycache_clean() {
   find . | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf # clean pycache
 }
 
-function docker-user-permission() {
+docker-user-permission() {
   docker info &>/dev/null && echo "can access as non root user" || echo "can not access as non root user"
 }
 
-function docker-prune() {
+docker-prune() {
   docker volume prune
   docker image prune
   docker container prune
 }
 
-function dvim() {
+dvim() {
   # TODO: compartilhar configuração
-
   CODEBASE=$(realpath $1)
   docker run -it --rm -v $CODEBASE:/home/spacevim/code spacevim/spacevim bash nvim code
 }
 
-function git_init_work() {
+git_init_work() {
   git commit --allow-empty -m "$(git_current_branch)"
   git push -u origin $(git_current_branch)
+}
+
+httpxx() {
+  httpx -http-proxy "$PROXY_8080" $@
+}
+
+chad() {
+  commit-chad --gemini
+}
+
+chady() {
+  yes | commit-chad --gemini -y
+}
+
+tarme() {
+  FOLDER_PATH="$1"
+  tar -czvf $2 $FOLDER_PATH.tar.xz $FOLDER_PATH
+}
+
+untarme() {
+  FOLDER_PATH="$1"
+  tar -xzvf $2 $FOLDER_PATH.tar.xz $FOLDER_PATH
+}
+
+commit_package_lock() {
+  git add **/package-lock.json
+  git commit -m 'chore: update package-lock.json'
+}
+
+freeze_deps() {
+  pip freeze --local | grep -v '-e git' >requirements.txt
+  cat requirements.txt
 }

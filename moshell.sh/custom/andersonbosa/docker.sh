@@ -14,3 +14,5 @@ function docker_get_ip() {
 
   docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $CONTAINER_ID
 }
+
+

@@ -13,7 +13,7 @@ Store your secrets, api-keys and etc in a protected place and keep using them in
 ```bash
 # Example of how start your secret repository:
 cd ~
-gh repo create moshell-secrets --private --clone
+gh repo create .moshell-secrets --private --clone
 ```
 2. Configure the following variables in .env.sh (check example [./secrets/.env.sh](./.env.sh.example))
   - `_MOSHELL_PLUGIN_GIT_OWNER` - your git username
