@@ -73,9 +73,9 @@ function __moshell::tools::version_manager::show_usage() {
   echo "Usage: $(basename $0) [OPTIONS]"
   echo
   echo "Options:"
-  echo "  -1, --patch         Increment the patch version"
+  echo "  -1, --major         Increment the major version"
   echo "  -2, --minor         Increment the minor version"
-  echo "  -3, --major         Increment the major version"
+  echo "  -3, --patch         Increment the patch version"
   echo "  -R, --release       Release NEW VERSION to the git repository"
   echo "  -h, --help          Show this usage message"
   exit 0
