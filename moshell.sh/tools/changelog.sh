@@ -18,8 +18,8 @@ function __moshell:tools::changelog::get_last_release_commit() {
     release_version_regex=$default_regex
   fi
 
-  local awk_query_2_item_on_the_row='NR==2'
-  local last_release_commit=$(git log --grep="$release_version_regex" --pretty=format:"%H" | awk "$awk_query_2_item_on_the_row")
+  local awk_query_first_item_on_the_row='NR==1'
+  local last_release_commit=$(git log --grep=$release_version_regex --pretty=format:"%H" | awk "$awk_query_first_item_on_the_row")
 
   echo "$last_release_commit"
 }
@@ -75,7 +75,7 @@ function __moshell:tools::changelog::main() {
   fi
 
   # Cleans/init the file
-  >"$changelog_file"
+  echo '' >"$changelog_file"
 
   local tmp_file=$(mktemp)
   git log --pretty=format:"%h,%an,%as,%s" "$LAST_RELEASE_COMMIT..HEAD" >"$tmp_file"
