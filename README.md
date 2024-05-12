@@ -101,12 +101,12 @@ Available commands:
 
 ### Contribution
 
-Your contributions and suggestions are hearty ♥  welcome. [See here the contribution guidelines.](docs/CONTRIBUTING.md)
+Your contributions and suggestions are hearty ♥  welcome. [See here the contribution guidelines.](CONTRIBUTING.md)
 
-Please, report bugs via [issues page](https://github.com/andersonbosa/moshell.sh/issues).
+Please, report bugs or security issues via [issues page](https://github.com/andersonbosa/moshell.sh/issues).
 
 ---
 
 ### License
 
-This work is licensed under [Public Domain License](/LICENSE.md).
+This work is licensed under [Public Domain License](LICENSE.md).
