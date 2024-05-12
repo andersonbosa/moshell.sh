@@ -61,7 +61,6 @@ function __moshell:tools::version_manager::increment_version() {
 }
 
 function __moshell::tools::version_manager::push_version() {
-  # NOTE: talvez no futuro use a 
   git add version
   git commit -m "release($(cat $_MOSHELL_DIR_BASE_PATH/version))"
   git push -u origin $(git branch --show-current)
@@ -75,11 +74,11 @@ function __moshell::tools::version_manager::show_usage() {
   echo "Usage: $(basename $0) [OPTIONS]"
   echo
   echo "Options:"
-  echo "  -1, --patch      Increment the patch version"
-  echo "  -2, --minor      Increment the minor version"
-  echo "  -3, --major      Increment the major version"
-  echo "  -P, --push       Release NEW VERSION to the git repository"
-  echo "  -h, --help       Show this usage message"
+  echo "  -1, --patch         Increment the patch version"
+  echo "  -2, --minor         Increment the minor version"
+  echo "  -3, --major         Increment the major version"
+  echo "  -R, --release       Release NEW VERSION to the git repository"
+  echo "  -h, --help          Show this usage message"
   exit 0
 }
 
