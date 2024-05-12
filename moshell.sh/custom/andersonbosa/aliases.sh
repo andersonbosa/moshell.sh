@@ -34,6 +34,9 @@ alias tbu="nc termbin.com 9999"
 alias tat="tmux attach"
 alias hosts="sudo $EDITOR /etc/hosts"                                               
 
+alias zshreload="source ~/.zshrc"
+alias zshconfig="$EDITOR ~/.zshrc && zshreload"
+
 alias copy="clipcopy"
 alias tf=terraform
 alias kubectl="minikube kubectl -- "
