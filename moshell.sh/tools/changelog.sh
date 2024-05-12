@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 #
 # Author: @andersonbosa
-# Description:
-#   XXX
+# Description: This script generates a changelog based on Git commit history.
+# It identifies the last release commit, parses the commit messages, and
+# categorizes them into different sections based on semantic keys. The resulting
+# changelog is formatted and saved to a specified file location.
 #
 
 ABSOLUTE_SCRIPT_FILE_PATH="${BASH_SOURCE:-$0}"
@@ -64,12 +66,10 @@ function __moshell:tools::changelog::parse_line_to_changelog() {
 }
 
 function __moshell:tools::changelog::main() {
-  LAST_CONSIDERATED_COMMIT=$(__moshell:tools::changelog::get_last_release_commit)
-  # echo "[+] Using commit: $LAST_CONSIDERATED_COMMIT"
+  LAST_RELEASE_COMMIT=$(__moshell:tools::changelog::get_last_release_commit)
 
   local changelog_file="$_MOSHELL_DIR_BASE_PATH/../docs/CHANGELOG.md"
   local changelog_file_content_backup=""
-
   if [ -f "$changelog_file" ]; then
     changelog_file_content_backup=$(cat "$changelog_file")
   fi
@@ -78,7 +78,7 @@ function __moshell:tools::changelog::main() {
   >"$changelog_file"
 
   local tmp_file=$(mktemp)
-  git log --pretty=format:"%h,%an,%as,%s" "$LAST_CONSIDERATED_COMMIT..HEAD" >"$tmp_file"
+  git log --pretty=format:"%h,%an,%as,%s" "$LAST_RELEASE_COMMIT..HEAD" >"$tmp_file"
 
   local tmp_file_reversed=$(mktemp)
   awk '{a[i++]=$0} END {for (j=i-1; j>=0;) print a[j--] }' $tmp_file >$tmp_file_reversed
