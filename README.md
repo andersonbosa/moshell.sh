@@ -18,7 +18,7 @@
         <img src="https://img.shields.io/badge/license-CC_1.0-white.svg">
       </a>
       <a href="https://github.com/andersonbosa/moshell.sh/blob/main/moshell.sh/version">
-        <img src="https://img.shields.io/badge/version-2.5.0-blue.svg">
+        <img src="https://img.shields.io/badge/version-2.5.1-blue.svg">
       </a>
     </p>
   </p>

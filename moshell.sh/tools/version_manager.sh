@@ -57,6 +57,10 @@ function __moshell:tools::version_manager::increment_version() {
   new_version="$major.$minor.$patch"
   echo "$new_version" >$_MOSHELL_DIR_BASE_PATH/version
 
+  # Update the version in README.md badge
+  local README_PATH=$ABSOLUTE_SCRIPT_DIR_PATH/../../README.md
+  sed -i "s/version-$current_version/version-$new_version/g" $README_PATH
+
   echo "[+] Version incremented to: $new_version"
 }
 
