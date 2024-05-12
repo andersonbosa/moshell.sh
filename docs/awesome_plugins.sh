@@ -1,0 +1,2 @@
+# Awesome Moshell.sh Plugins
+

@@ -5,7 +5,6 @@ _moshell::core::index() {
 # NOTE: The order matters
 source "$_MOSHELL_DIR_CORE/flags.sh"
 source "$_MOSHELL_DIR_CORE/logger.sh"
-source "$_MOSHELL_DIR_CORE/tracking.sh"
 source "$_MOSHELL_DIR_CORE/banner.sh"
 source "$_MOSHELL_DIR_CORE/cli.sh"
 

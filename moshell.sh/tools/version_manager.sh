@@ -57,13 +57,15 @@ function __moshell:tools::version_manager::increment_version() {
   new_version="$major.$minor.$patch"
   echo "$new_version" >$_MOSHELL_DIR_BASE_PATH/version
 
+  # Update the version in README.md badge
+  local README_PATH=$ABSOLUTE_SCRIPT_DIR_PATH/../../README.md
+  sed -i "s/version-$current_version/version-$new_version/g" $README_PATH
+
   echo "[+] Version incremented to: $new_version"
 }
 
 function __moshell::tools::version_manager::push_version() {
-  # NOTE: talvez no futuro use a 
-  git add version
-  git commit -m "release($(cat $_MOSHELL_DIR_BASE_PATH/version))"
+  git commit --allow-empty -m "release($(cat $_MOSHELL_DIR_BASE_PATH/version))"
   git push -u origin $(git branch --show-current)
   exit 0
 }
@@ -75,11 +77,11 @@ function __moshell::tools::version_manager::show_usage() {
   echo "Usage: $(basename $0) [OPTIONS]"
   echo
   echo "Options:"
-  echo "  -1, --patch      Increment the patch version"
-  echo "  -2, --minor      Increment the minor version"
-  echo "  -3, --major      Increment the major version"
-  echo "  -P, --push       Release NEW VERSION to the git repository"
-  echo "  -h, --help       Show this usage message"
+  echo "  -1, --major         Increment the major version"
+  echo "  -2, --minor         Increment the minor version"
+  echo "  -3, --patch         Increment the patch version"
+  echo "  -R, --release       Release NEW VERSION to the git repository"
+  echo "  -h, --help          Show this usage message"
   exit 0
 }
 
