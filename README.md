@@ -11,14 +11,14 @@
         <img src="https://img.shields.io/badge/open--source-green.svg">
       </a>
       <a href="#">
-        <img src="https://img.shields.io/badge/contributions--welcome-orange.svg">
+        <img src="https://img.shields.io/badge/contributions-welcome-orange.svg">
       </a>
       <br>
       <a href="/LICENSE.md">
-        <img src="https://img.shields.io/badge/license-MIT-blue.svg">
+        <img src="https://img.shields.io/badge/license-CC_1.0-white.svg">
       </a>
       <a href="https://github.com/andersonbosa/moshell.sh/blob/main/moshell.sh/version">
-        <img src="https://img.shields.io/badge/version-2x-blue.svg">
+        <img src="https://img.shields.io/badge/version-2.5.0-blue.svg">
       </a>
     </p>
   </p>
@@ -102,6 +102,7 @@ Available commands:
 ### Contribution
 
 Your contributions and suggestions are hearty ♥  welcome. [See here the contribution guidelines.](docs/CONTRIBUTING.md)
+
 Please, report bugs via [issues page](https://github.com/andersonbosa/moshell.sh/issues).
 
 ---
