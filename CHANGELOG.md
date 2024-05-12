@@ -1,3 +1,16 @@
+## 2024-05-12 - release(2.5.1) 
+
+> - [Commit 995212e](https://github.com/andersonbosa/moshell.sh/commit/995212e)
+
+This release introduces new features and enhancements to Moshell.sh. The version manager options have been reordered, and a new changelog generation script has been added. The script categorizes changes based on semantic keys, providing a more organized and consistent changelog. Additionally, documentation links have been updated, and a process for reporting security issues has been established.
+
+- feat: bump version to 2.5.1
+- fix: reorder version_manager options
+- feat: added customization to changelog creation process
+- docs: update docs links and add security issue reporting
+- feat: add changelog generation script
+- feat: enhance changelog script to categorize changes based on semantic keys
+
 ## 2023-08-18 - release(2.3.2)
 
 > [Commit d656095](https://github.com/andersonbosa/moshell.sh/commit/d656095)
