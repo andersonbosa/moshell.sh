@@ -61,8 +61,7 @@ function __moshell:tools::version_manager::increment_version() {
 }
 
 function __moshell::tools::version_manager::push_version() {
-  git add version
-  git commit -m "release($(cat $_MOSHELL_DIR_BASE_PATH/version))"
+  git commit --allow-empty -m "release($(cat $_MOSHELL_DIR_BASE_PATH/version))"
   git push -u origin $(git branch --show-current)
   exit 0
 }
