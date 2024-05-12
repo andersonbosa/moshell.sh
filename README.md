@@ -108,21 +108,3 @@ Please, report bugs via [issues page](https://github.com/andersonbosa/moshell.sh
 
 ### License
 
-This work is licensed under [MIT License.](/LICENSE.md)
-
----
-
-### Usage Tracking Notice
-
-> By default, usage tracking is disabled. If you want to help us you can see in [this section](https://github.com/andersonbosa/moshell.sh/blob/main/docs/USAGE_TRACKING_POLICY.md#your-options) how easy is to help us.
-
-We value your privacy and want to ensure you are informed about our usage tracking
-practices. When you use our CLI, we generate a unique hashed identifier based on 
-certain **non-sensitive system information** using the SHA-256 algorithm. This identifier
-helps us understand how often our CLI is being used and the general patterns of usage.
-**No personal, sensitive, or identifiable data is collected**. 
-
-> If you want a better understanding, we encourage you to audit our Tracking service:
-> https://github.com/andersonbosa/moshell.sh/blob/main/moshell.sh/core/tracking.sh
-
-You can find more details about our approach to usage tracking in our [USAGE_TRACKING_POLICY](docs/USAGE_TRACKING_POLICY.md).

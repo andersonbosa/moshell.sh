@@ -22,13 +22,6 @@ export _MOSHELL_FLAG_EDITOR=vim            # default=vim # Modifies which editor
 export _MOSHELL_FLAG_ENABLE_LOAD_PLUGINS=1 # default=1 # Enable plugins
 export _MOSHELL_FLAG_ENABLE_LOAD_CUSTOMS=1 # default=1 # Enable customizations
 
-##
-# Enable anonymous tracking usage
-# - Futher details on: https://github.com/andersonbosa/moshell.sh/blob/main/docs/USAGE_TRACKING_POLICY.md
-##
-export _MOSHELL_FLAG_ENABLE_TRACKING_SERVICE=0     # default=0
-export _MOSHELL_FLAG_ENABLE_TRACKING_FINGERPRINT=1 # default=1
-
 ###############################################################################
 # Keep this import at the end of "flags.sh"
 export _MOSHELL_DIR_CORE_FLAGS_OVERRIDE="${_MOSHELL_DIR_CORE_FLAGS}.override"
