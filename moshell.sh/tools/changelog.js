@@ -1,14 +1,16 @@
 #!/usr/bin/env node
 
 const { execSync } = require('node:child_process')
-const { dirname, join, resolve } = require('node:path')
+const { dirname, join } = require('node:path')
 const fs = require('node:fs')
 const os = require('node:os')
 const https = require('node:https')
 
+
 // Defines the absolute path of the script file and the script directory
 const ABSOLUTE_SCRIPT_FILE_PATH = process.argv[1]
 const ABSOLUTE_SCRIPT_DIR_PATH = dirname(ABSOLUTE_SCRIPT_FILE_PATH)
+
 const { GOOGLE_GEMINI_API_KEY } = process.env
 
 function getLastNthReleaseCommit (nth) {
@@ -111,13 +113,15 @@ function getCommitsFromCurrentVersion (fromCommit, sinceCommit) {
 }
 
 // Main function to generate Changelog
-async function generateChangelog (outputPath = 'CHANGELOG.md') {
-  const changelogFilePath = join(`${ABSOLUTE_SCRIPT_DIR_PATH}`, '../..', '/docs/CHANGELOG.md')
-
-  let changelogFileContentBackup = ""
-  if (fs.existsSync(changelogFilePath)) {
-    changelogFileContentBackup = fs.readFileSync(changelogFilePath, 'utf-8')
-  }
+async function generateChangelog (
+  currentChangelog,
+  outputPath = 'CHANGELOG.md'
+) {
+  const changelogFilePath = join(`${ABSOLUTE_SCRIPT_DIR_PATH}`, '../..', currentChangelog)
+  console.log(changelogFilePath)
+  const changelogFileContentBackup = fs.existsSync(changelogFilePath)
+    ? fs.readFileSync(changelogFilePath, 'utf-8')
+    : ''
 
   // Limpa/inicializa o arquivo
   // fs.writeFileSync(changelogFilePath, '')
@@ -129,10 +133,12 @@ async function generateChangelog (outputPath = 'CHANGELOG.md') {
   const changelogLines = commitsFromTheCurrentVersion.reduce(parseLineToChangelog, [])
 
   const changelogContentFromNewVersion = changelogLines.join(os.EOL)
+  
+  // const geminiResponse = false
   const geminiResponse = await generateReleaseOverviewWithGoogleGemini(changelogContentFromNewVersion)
 
   const changelogContent = changelogContentFromNewVersion
-    .replace('TBD', `${os.EOL}${geminiResponse}${os.EOL}`)
+    .replace('TBD', geminiResponse ? `${os.EOL}${geminiResponse}${os.EOL}` : '')
     .concat(os.EOL)
     .concat(os.EOL)
     .concat(`${changelogFileContentBackup}`)
