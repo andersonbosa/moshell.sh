@@ -32,10 +32,10 @@ alias wit="cd $HOME/witchcrafts ; l"
 alias doti="~/dotfiles/cli.sh"
 alias tbu="nc termbin.com 9999"
 alias tat="tmux attach"
-alias hosts="sudo $EDITOR /etc/hosts"                                               
+alias hosts="sudo vim /etc/hosts"                                               
 
 alias zshreload="source ~/.zshrc"
-alias zshconfig="$EDITOR ~/.zshrc && zshreload"
+alias zshconfig="vim ~/.zshrc && zshreload"
 
 alias copy="clipcopy"
 alias tf=terraform

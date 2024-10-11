@@ -197,3 +197,37 @@ sudo systemctl start systemd-journald
 ``` 
 '''
 }
+
+howto_clear_cached_memory() {
+  sudo sync; sudo echo 1 >/proc/sys/vm/drop_caches
+}
+
+howto_debug_linux() {
+cat <<EOF 
+
+Why does kworker hog your CPU (cont.)? As an alternative to my other answer here, Perf is a more professional way to analyse what kernel tasks are hogging your CPU:
+
+Install perf:
+
+sudo apt-get install linux-tools-common linux-tools-3.11.0-15-generic
+(The second package must match your kernel version. You can first install just linux-tools-common and call perf to let it tell you which package it needs.)
+
+Record some 10 seconds of backtraces on all your CPUs:
+
+sudo perf record -g -a sleep 10
+Analyse your recording:
+
+sudo perf report
+(Navigate the call graph with ←, →, ↑, ↓ and Enter.)
+
+EOF
+}
+
+
+howto_replace_all_occourrences_of_x_by_y_in_dir() {
+  cat <<EOF | cat
+find ../pathdir/ -type f -exec sed -i 's/"text":/"name":/g' {} +
+
+EOF
+}
+

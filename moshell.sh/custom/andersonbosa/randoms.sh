@@ -1,4 +1,18 @@
-# -*- coding: utf-8 -*-
+pinga() {
+  ping -c 1 8.8.8.8 -w 1 &>/dev/null
+  if [ $? -eq 0 ]; then
+    echo "INFO: internet OK"
+    return 0
+  else
+    echo "INFO: internet NOK"
+    return 1
+  fi
+}
+
+
+generate_strong_password() {
+  openssl rand -base64 64 | tr -d '==\n'
+}
 
 translate() {
   sr translate -from="portugues" -to="en" "$@"

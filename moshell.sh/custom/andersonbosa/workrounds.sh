@@ -1,18 +1,17 @@
+#!/usr/bin/env bash
 
-
-function fix-ssh-key-permissions() {
-  # fix permissions on ssh dir.
-  # @param {string} $1 [default="$HOME/.ssh"]
-
+fix-ssh-key-permissions () {
   local SSHPath="$1"
-  if [[ -z "$SSHPath" ]]; then # if string empty
-    SSHPath="$HOME/.ssh"
+
+  if [[ -z "$SSHPath" ]]
+  then
+          SSHPath="$HOME/.ssh"
   fi
-  
-  sudo chown -R "$USER:$USER" "$HOME/.ssh"
-  chmod -R 700 "$HOME/.ssh/"
-  chmod 600 $HOME/.ssh/*
-  chmod 644 $HOME/.ssh/*.pub
+  sudo chown -R "$USER:$USER" $SSHPath
+  chmod -R 700 $SSHPath
+  chmod 600 $SSHPath/*
+  chmod 644 $SSHPath/*.pub
+
   unset SSHPath
 }
 
