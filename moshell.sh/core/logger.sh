@@ -48,7 +48,7 @@ function _moshell::log {
       echo '[DATE]                                [PID]   [TYPE] [MESSAGE]' >>$logpath
     fi
 
-    echo "[$(date --iso-8601=ns)] [$$] [$logtype] $message" >>"$logpath"
+    echo "[$(date)] [$$] [$logtype] $message" >>"$logpath"
   fi
 }
 
